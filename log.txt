@@ -1,0 +1,14 @@
+22.10.2020 (DD.MM.YYYY)
+CSV-tiedostojen lataaminen mysql-kantaan pythonilla:
+Otin pohjaksi tämän[linkki:https://stackoverflow.com/a/10154650] ratkaisun.
+Sitä varten piti asentaa MySQLdb
+
+Ajoin pythonia ubuntussa WSL:sta.
+ensin piti asentaa pip: sudo apt-get install python3-pip
+Kokeilin asentaa mysqlclientin komennolla: pip3 install mysqlclient
+Tämä kuitenkin meni virheeseen "Command "python setup.py egg_info" failed with error code 1 in /tmp/pip-build-x5587auc/mysqlclient/"
+Asensin paketteja seuraavalla komennolla: "sudo apt-get install python3-dev default-libmysqlclient-dev build-essential", joka löytyi osoitteesta https://pypi.org/project/mysqlclient/
+Tämän jälkeen komento "pip3 install mysqlclient" onnistui.
+"localhost"-merkkijono piti muuttaa merkkijonona olevaksi ip-osoitteeksi "127.0.0.1"
+
+Lopulta vaihdoin csv-tiedoston lukemisen sivun https://docs.python.org/3/library/csv.html#csv.reader esimerkkiin.
