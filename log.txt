@@ -12,3 +12,48 @@ Tämän jälkeen komento "pip3 install mysqlclient" onnistui.
 "localhost"-merkkijono piti muuttaa merkkijonona olevaksi ip-osoitteeksi "127.0.0.1"
 
 Lopulta vaihdoin csv-tiedoston lukemisen sivun https://docs.python.org/3/library/csv.html#csv.reader esimerkkiin.
+
+23.20.2020
+mysql-tauluun siirtäessä ainakin joillain riveillä tili-kentän tiedot eivät tallentuneet kokonaan. Syynä oli, etten ollut määrittänyt kenttää tarpeeksi pitkäksi.
+
+Jotta en luo liian isoja kenttiä, niin etsin maksimipituuksia datasta jokaiselle kentälle.
+Alla skripti, jolla löytää jokaisen kentän pisimmän tekstin:
+awk -F"\t" '  NR==1{
+    for(n = 1; n <= NF; n++) {
+       colname[n]=$n
+    }
+}
+NR>1{
+    for(n = 1; n <= NF; n++) {
+        if (length($n)>maxlen[n])
+            maxlen[n]=length($n)
+    }
+}
+END {
+        for (i in colname) {
+                print colname[i], ":", maxlen[i]+0;
+        }
+} ' <filename>
+
+
+alla uusi taulumääritys, jotta kentät olisivat riittävän isoja datalle
+create table hankinta (lasku_id varchar(12), tili varchar(100) , tiliointisumma numeric(18,2), tositepvm varchar(10), toimittaja_y_tunnus varchar(40), toimittaja_nimi  varchar(100), hankintayksikko_tunnus varchar(8), hankintayksikko varchar(128), ylaorganisaatio_tunnus varchar(8), ylaorganisaatio varchar(50), sektori varchar(10), tuote_palveluryhma varchar(90), hankintakategoria varchar(50));
+
+
+Jaetaan th_data -tiedostot pienemmiksi, jotta voidaan kokeilla nopeutuuko tietojen syöttö kantaan.
+Alla esimerkki komento th_data_2019.csv -tiedoston jakamisesta 100 tuhannen rivin pituisiin tiedostoihin.
+split -d -l 100000 th_data_2019.csv th_19_ 
+
+Kopioin splitatut tiedostot erilliseen tiedostoon ja käytin alla olevaa mallia:
+"for file in `cat list_of_files.txt`;
+   do python perfile_code.py $file &
+done"
+Malli löytyi osoitteesta: https://stackoverflow.com/a/54509606
+
+Hakutulosten näyttäminen verkkosivulla näyttää ääkköset väärin.
+haun "SHOW FULL COLUMNS FROM <taulun nimi>;" mukaan collation oli latin1_swedish_ci.
+
+Ongelma ratkesi määrittämällä merkistö pdo-yhteysmäärityksessä. Linkki, josta ratkaisu löytyi: "https://stackoverflow.com/a/4361485".
+
+Indeksin luonti haun nopeuttamiseksi:
+CREATE INDEX hankinta_toim_nimi on hankinta (toimittaja_nimi);
