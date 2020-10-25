@@ -57,3 +57,7 @@ Ongelma ratkesi määrittämällä merkistö pdo-yhteysmäärityksessä. Linkki,
 
 Indeksin luonti haun nopeuttamiseksi:
 CREATE INDEX hankinta_toim_nimi on hankinta (toimittaja_nimi);
+
+25.10.2020
+Indeksin luonti y-tunnuksen perusteella.
+CREATE INDEX hankinta_y_tunnus ON hankinta (toimittaja_y_tunnus);
