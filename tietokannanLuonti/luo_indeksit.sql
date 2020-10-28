@@ -1,4 +1,4 @@
-USE utotonox_laskututkinta;
-CREATE INDEX hankinta_toim_nimi on test_hankinta (toimittaja_nimi);
+USE <database>;
+CREATE INDEX hankinta_toim_nimi on <table_name> (toimittaja_nimi);
 
-CREATE INDEX hankinta_y_tunnus ON test_hankinta (toimittaja_y_tunnus);
+CREATE INDEX hankinta_y_tunnus ON <table_name> (toimittaja_y_tunnus);
