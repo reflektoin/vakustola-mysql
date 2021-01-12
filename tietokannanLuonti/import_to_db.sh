@@ -11,12 +11,13 @@ for file in `ls -1 ./*.csv[0-9][0-9]`;
   do python3 import_arg.py $file &
 done
 
-#wait until all import processes are finished
+#wait until all import processes are finished. Reason for "-ne 1" is that there's one python process running before starting this script,
 prosessimaara=$(ps -ef | grep -i python | grep -v grep | wc -l)
-while [ $prosessimaara -ne 0 ]
+while [ $prosessimaara -ne 1 ]
 do
     echo "Odotetaan importtauksen valmistumista"
     sleep 60
     prosessimaara=$(ps -ef | grep -i python | grep -v grep | wc -l)
 done
 echo "Import päättyi"
+mysql -h 127.0.0.1 -u <db_username> -p < luo_indeksit.sql

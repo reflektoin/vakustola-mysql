@@ -1,8 +1,8 @@
 import sys
 import csv
-import MySQLdb
-#give anna csv-tiedoston nimi parametrina
-mydb = MySQLdb.connect(host='127.0.0.1',
+import pymysql
+#anna csv-tiedoston nimi parametrina
+mydb = pymysql.connect(host='127.0.0.1',
                            user='<db_user>',
                            passwd='<password_db_user>',
                            db='<database_name>')
