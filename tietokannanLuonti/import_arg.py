@@ -15,7 +15,7 @@ with open(command_argument, newline='') as csvfile:
     for row in spamreader:
         cursor.execute("INSERT INTO <table_name> VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", row)
         #close the connection to the database.
-        mydb.commit()
+    mydb.commit()
 cursor.close()
 print (command_argument)
     
