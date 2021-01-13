@@ -15,5 +15,5 @@ for file in "$dir"/*.csv; do
     # Details of the split command are up to you.  This one splits each file
     # into pieces named by appending a sequence number to the original file's
     # name.  The original file is left in place.
-    split --lines=50000 --numeric-suffixes "$file" "$file"
+    split --lines=100000 --numeric-suffixes "$file" "$file"
 done
