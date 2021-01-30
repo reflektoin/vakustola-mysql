@@ -13,7 +13,7 @@ with open(command_argument, newline='') as csvfile:
         rivilista.append(row)
         
     mydb = pymysql.connect(host='127.0.0.1',
-                           user='<db_user>',
+                           user='<db_username>',
                            passwd='<password_db_user>',
                            db='<database_name>')
     cursor = mydb.cursor()
